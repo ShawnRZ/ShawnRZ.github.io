@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=' 特别说明：本项目理论上试用于 各地大多数学校 的完美校园健康打卡（注意不是校内打卡），但是仅测试过 河南师范大学 ，烦请测试能用的同学留下学校信息以便后人查看，佛系更新 （这个项目本就是为了偷懒而存在的） ，有问题可以提Issues。
+功能 完美校园每日定时自动打卡
+校内打卡
+多人打卡
+pushplus推送，官网
+邮箱推送
+server酱推送（有问题），官网
+寻人启事 寻找一位熟悉Android开发或者逆向的童鞋完善此项目, https://t.me/joinchat/U1CYMWvgXjXTE9lx
+实现原理 模拟手机app登录，获取打卡所需的token
+获取上次打卡的信息，并用于自动打卡
+由于完美校园APP对登录设备的IMEI做了检测，如果是新设备只能使用短信验证码登录。而且，在高版本的Android上似乎对IMEI做了加密处理。所以，强烈建议用安装低版本Android系统的模拟器上先登录一次，再将模拟器的IMEI拷贝用作本项目的模拟登录，具体见使用方法。
+使用方法（图片显示不了，可去博客，博客地址在最下方）： 下载所需文件
+VMOS模拟器，若链接失效可去VMOS官网下载
+完美校园APP，若链接失效可去完美校园官网下载
+打开VMOS，并安装完美校园APP进行打卡
+打开VMOS，点击“&#43;”
+选择安卓5.1极客版下载并添加
+等待一会后，会自动进入虚拟机，点击右侧小圆点
+选择文件传输
+选择“我要导入”
+导入完美校园安装包
+等待一会后，返回虚拟机，打开完美校园进行打卡
+获取虚拟机IMEI
+进入设置，注意不要选错了图标
+下滑，找到“关于手机”
+点击“状态信息”
+点击“IMEI信息”
+将IMEI信息记录备用
+点击右上角绿色按钮“Code”，选择“Download ZIP”下载压缩包
+解压压缩包会得到一个文件夹，用记事本打开文件夹中的settings.toml文本，按提示输入。
+打开腾讯云，在右上角点击登录，登陆后进入控制台，在搜索栏中搜索“云函数”
+进入云函数后，选择左侧边栏的函数服务，再点击“新建”，设置如图，点击上传将刚刚下载的文件夹
+配置触发器，图中设置为每天1点触发，可通过修改Cron表达式更改时间，具体见文档 最后点击完成，部署成功！ 个人博客地址：RZX&amp;rsquo;s blog '><title>完美校园自动打卡</title>
+
+<link rel='canonical' href='https://blog.renzexuan.me/p/%E5%AE%8C%E7%BE%8E%E6%A0%A1%E5%9B%AD%E8%87%AA%E5%8A%A8%E6%89%93%E5%8D%A1/'>
+
+<link rel="stylesheet" href="/scss/style.min.5a8e892f6fa14515e9065eee1f5d2e05302606ec7f11750b2fb95198f9cdcbfd.css"><meta property='og:title' content='完美校园自动打卡'>
+<meta property='og:description' content=' 特别说明：本项目理论上试用于 各地大多数学校 的完美校园健康打卡（注意不是校内打卡），但是仅测试过 河南师范大学 ，烦请测试能用的同学留下学校信息以便后人查看，佛系更新 （这个项目本就是为了偷懒而存在的） ，有问题可以提Issues。
+功能 完美校园每日定时自动打卡
+校内打卡
+多人打卡
+pushplus推送，官网
+邮箱推送
+server酱推送（有问题），官网
+寻人启事 寻找一位熟悉Android开发或者逆向的童鞋完善此项目, https://t.me/joinchat/U1CYMWvgXjXTE9lx
+实现原理 模拟手机app登录，获取打卡所需的token
+获取上次打卡的信息，并用于自动打卡
+由于完美校园APP对登录设备的IMEI做了检测，如果是新设备只能使用短信验证码登录。而且，在高版本的Android上似乎对IMEI做了加密处理。所以，强烈建议用安装低版本Android系统的模拟器上先登录一次，再将模拟器的IMEI拷贝用作本项目的模拟登录，具体见使用方法。
+使用方法（图片显示不了，可去博客，博客地址在最下方）： 下载所需文件
+VMOS模拟器，若链接失效可去VMOS官网下载
+完美校园APP，若链接失效可去完美校园官网下载
+打开VMOS，并安装完美校园APP进行打卡
+打开VMOS，点击“&#43;”
+选择安卓5.1极客版下载并添加
+等待一会后，会自动进入虚拟机，点击右侧小圆点
+选择文件传输
+选择“我要导入”
+导入完美校园安装包
+等待一会后，返回虚拟机，打开完美校园进行打卡
+获取虚拟机IMEI
+进入设置，注意不要选错了图标
+下滑，找到“关于手机”
+点击“状态信息”
+点击“IMEI信息”
+将IMEI信息记录备用
+点击右上角绿色按钮“Code”，选择“Download ZIP”下载压缩包
+解压压缩包会得到一个文件夹，用记事本打开文件夹中的settings.toml文本，按提示输入。
+打开腾讯云，在右上角点击登录，登陆后进入控制台，在搜索栏中搜索“云函数”
+进入云函数后，选择左侧边栏的函数服务，再点击“新建”，设置如图，点击上传将刚刚下载的文件夹
+配置触发器，图中设置为每天1点触发，可通过修改Cron表达式更改时间，具体见文档 最后点击完成，部署成功！ 个人博客地址：RZX&amp;rsquo;s blog '>
+<meta property='og:url' content='https://blog.renzexuan.me/p/%E5%AE%8C%E7%BE%8E%E6%A0%A1%E5%9B%AD%E8%87%AA%E5%8A%A8%E6%89%93%E5%8D%A1/'>
+<meta property='og:site_name' content='RZX&#39;s blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2022-08-25T20:36:39&#43;08:00'/><meta property='article:modified_time' content='2022-08-25T20:36:39&#43;08:00'/>
+<meta name="twitter:title" content="完美校园自动打卡">
+<meta name="twitter:description" content=" 特别说明：本项目理论上试用于 各地大多数学校 的完美校园健康打卡（注意不是校内打卡），但是仅测试过 河南师范大学 ，烦请测试能用的同学留下学校信息以便后人查看，佛系更新 （这个项目本就是为了偷懒而存在的） ，有问题可以提Issues。
+功能 完美校园每日定时自动打卡
+校内打卡
+多人打卡
+pushplus推送，官网
+邮箱推送
+server酱推送（有问题），官网
+寻人启事 寻找一位熟悉Android开发或者逆向的童鞋完善此项目, https://t.me/joinchat/U1CYMWvgXjXTE9lx
+实现原理 模拟手机app登录，获取打卡所需的token
+获取上次打卡的信息，并用于自动打卡
+由于完美校园APP对登录设备的IMEI做了检测，如果是新设备只能使用短信验证码登录。而且，在高版本的Android上似乎对IMEI做了加密处理。所以，强烈建议用安装低版本Android系统的模拟器上先登录一次，再将模拟器的IMEI拷贝用作本项目的模拟登录，具体见使用方法。
+使用方法（图片显示不了，可去博客，博客地址在最下方）： 下载所需文件
+VMOS模拟器，若链接失效可去VMOS官网下载
+完美校园APP，若链接失效可去完美校园官网下载
+打开VMOS，并安装完美校园APP进行打卡
+打开VMOS，点击“&#43;”
+选择安卓5.1极客版下载并添加
+等待一会后，会自动进入虚拟机，点击右侧小圆点
+选择文件传输
+选择“我要导入”
+导入完美校园安装包
+等待一会后，返回虚拟机，打开完美校园进行打卡
+获取虚拟机IMEI
+进入设置，注意不要选错了图标
+下滑，找到“关于手机”
+点击“状态信息”
+点击“IMEI信息”
+将IMEI信息记录备用
+点击右上角绿色按钮“Code”，选择“Download ZIP”下载压缩包
+解压压缩包会得到一个文件夹，用记事本打开文件夹中的settings.toml文本，按提示输入。
+打开腾讯云，在右上角点击登录，登陆后进入控制台，在搜索栏中搜索“云函数”
+进入云函数后，选择左侧边栏的函数服务，再点击“新建”，设置如图，点击上传将刚刚下载的文件夹
+配置触发器，图中设置为每天1点触发，可通过修改Cron表达式更改时间，具体见文档 最后点击完成，部署成功！ 个人博客地址：RZX&amp;rsquo;s blog ">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huee3898509ca0b14ab824115394d3d001_22539_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">RZX&#39;s blog</a></h1>
+            <h2 class="site-description">AvadaKedavra!</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ren-zexuan'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://blog.renzexuan.me/" selected>中文</option>
+                        
+                            <option value="https://blog.renzexuan.me/en/" >English</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%AE%8C%E7%BE%8E%E6%A0%A1%E5%9B%AD%E8%87%AA%E5%8A%A8%E6%89%93%E5%8D%A1/">完美校园自动打卡</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 25, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>特别说明：本项目理论上试用于 <em><strong>各地大多数学校</strong></em> 的完美校园健康打卡（注意不是校内打卡），但是仅测试过 <em><strong>河南师范大学</strong></em> ，烦请测试能用的同学留下学校信息以便后人查看，佛系更新 <em>（这个项目本就是为了偷懒而存在的）</em> ，有问题可以提<a class="link" href="https://github.com/FNDHSTD/WanxiaoHealthyCheckOnTencentCloud/issues"  target="_blank" rel="noopener"
+    >Issues</a>。</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="功能">功能</h2>
+<ul>
+<li>
+<p>完美校园每日定时自动打卡</p>
+</li>
+<li>
+<p>校内打卡</p>
+</li>
+<li>
+<p>多人打卡</p>
+</li>
+<li>
+<p>pushplus推送，<a class="link" href="https://pushplus.hxtrip.com/"  target="_blank" rel="noopener"
+    >官网</a></p>
+</li>
+<li>
+<p>邮箱推送</p>
+</li>
+<li>
+<p>server酱推送（有问题），<a class="link" href="http://sc.ftqq.com/"  target="_blank" rel="noopener"
+    >官网</a></p>
+</li>
+</ul>
+<h2 id="寻人启事">寻人启事</h2>
+<p>寻找一位熟悉Android开发或者逆向的童鞋完善此项目, <a class="link" href="https://t.me/joinchat/U1CYMWvgXjXTE9lx"  target="_blank" rel="noopener"
+    >https://t.me/joinchat/U1CYMWvgXjXTE9lx</a></p>
+<h2 id="实现原理">实现原理</h2>
+<ul>
+<li>
+<p>模拟手机app登录，获取打卡所需的token</p>
+</li>
+<li>
+<p>获取上次打卡的信息，并用于自动打卡</p>
+</li>
+<li>
+<p>由于完美校园APP对登录设备的IMEI做了检测，如果是新设备只能使用短信验证码登录。而且，在高版本的Android上似乎对IMEI做了加密处理。所以，强烈建议用安装低版本Android系统的模拟器上先登录一次，再将模拟器的IMEI拷贝用作本项目的模拟登录，具体见使用方法。</p>
+</li>
+</ul>
+<h2 id="使用方法图片显示不了可去博客博客地址在最下方">使用方法（图片显示不了，可去博客，博客地址在最下方）：</h2>
+<ol>
+<li>
+<p>下载所需文件</p>
+<ul>
+<li>
+<p><a class="link" href="https://files.vmos.cn/vmospro/version/2021012018500427995_vmoscn.apk"  target="_blank" rel="noopener"
+    >VMOS模拟器</a>，若链接失效可去<a class="link" href="http://www.vmos.cn/"  target="_blank" rel="noopener"
+    >VMOS官网</a>下载</p>
+</li>
+<li>
+<p><a class="link" href="http://apk.17wanxiao.com/campus/apk/wanxiao.apk"  target="_blank" rel="noopener"
+    >完美校园APP</a>，若链接失效可去<a class="link" href="https://www.17wanxiao.com/new/index.html"  target="_blank" rel="noopener"
+    >完美校园官网</a>下载</p>
+</li>
+</ul>
+</li>
+<li>
+<p>打开VMOS，并安装完美校园APP进行打卡</p>
+<ul>
+<li>
+<p>打开VMOS，点击“+”</p>
+<img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f323038393534333238392e6a7067.jpg" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f323038393534333238392e6a7067" style="zoom:25%;" />
+</li>
+<li>
+<p>选择安卓5.1极客版下载并添加</p>
+<img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f3136323637323437352e6a7067.jpg" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f3136323637323437352e6a7067" style="zoom: 25%;" />
+</li>
+<li>
+<p>等待一会后，会自动进入虚拟机，点击右侧小圆点</p>
+<img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f333439313034363237352e6a7067.jpg" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f333439313034363237352e6a7067" style="zoom:25%;" />
+</li>
+<li>
+<p>选择文件传输</p>
+<img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f323531383034333935362e6a7067.jpg" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f323531383034333935362e6a7067" style="zoom:25%;" />
+</li>
+<li>
+<p>选择“我要导入”</p>
+<img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f3137313237323132302e6a7067.jpg" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f3137313237323132302e6a7067" style="zoom:25%;" />
+</li>
+<li>
+<p>导入完美校园安装包</p>
+</li>
+<li>
+<p>等待一会后，返回虚拟机，打开完美校园进行打卡</p>
+</li>
+</ul>
+</li>
+<li>
+<p>获取虚拟机IMEI</p>
+<ul>
+<li>
+<p>进入设置，注意不要选错了图标</p>
+<img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f343032333531383931392e6a7067.jpg" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f343032333531383931392e6a7067" style="zoom:25%;" />
+</li>
+<li>
+<p>下滑，找到“关于手机”</p>
+<img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f313037393636343733332e6a7067.jpg" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f313037393636343733332e6a7067" style="zoom:25%;" />
+</li>
+<li>
+<p>点击“状态信息”</p>
+<img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f333139383336393237322e6a7067.jpg" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f333139383336393237322e6a7067" style="zoom:25%;" />
+</li>
+<li>
+<p>点击“IMEI信息”</p>
+<img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f3437363632333434382e6a7067.jpg" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f3437363632333434382e6a7067" style="zoom:25%;" />
+</li>
+<li>
+<p>将IMEI信息记录备用</p>
+</li>
+</ul>
+</li>
+<li>
+<p>点击右上角绿色按钮“Code”，选择“Download ZIP”<a class="link" href="https://github.com/FNDHSTD/WanxiaoHealthyCheckOnTencentCloud/archive/master.zip"  target="_blank" rel="noopener"
+    >下载</a>压缩包</p>
+</li>
+<li>
+<p>解压压缩包会得到一个文件夹，用记事本打开文件夹中的settings.toml文本，按提示输入。</p>
+</li>
+<li>
+<p>打开<a class="link" href="https://cloud.tencent.com/"  target="_blank" rel="noopener"
+    >腾讯云</a>，在右上角点击登录，登陆后进入控制台，在搜索栏中搜索“云函数”</p>
+</li>
+<li>
+<p>进入云函数后，选择左侧边栏的函数服务，再点击“新建”，设置如图，点击上传将刚刚下载的文件夹</p>
+</li>
+</ol>
+  <img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f313338363833303631322e706e67.png" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f313338363833303631322e706e67" style="zoom: 50%;" />
+<ol start="8">
+<li>配置触发器，图中设置为每天1点触发，可通过修改Cron表达式更改时间，具体见<a class="link" href="https://cloud.tencent.com/document/product/583/9708"  target="_blank" rel="noopener"
+    >文档</a></li>
+</ol>
+  <img src="https://rzxpicgo.oss-cn-shenzhen.aliyuncs.com/687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f323234373230343331302e706e67.png" alt="687474703a2f2f626c6f672e727a782e696e6b2f7573722f75706c6f6164732f323032312f30332f323234373230343331302e706e67" style="zoom:150%;" />
+<ol start="9">
+<li>最后点击完成，部署成功！</li>
+</ol>
+<h2 id="个人博客地址rzxs-blog1">个人博客地址：<a class="link" href="http://blog.renzexuan.com"  target="_blank" rel="noopener"
+    >RZX&rsquo;s blog</a></h2>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 RZX&#39;s blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#功能">功能</a></li>
+    <li><a href="#寻人启事">寻人启事</a></li>
+    <li><a href="#实现原理">实现原理</a></li>
+    <li><a href="#使用方法图片显示不了可去博客博客地址在最下方">使用方法（图片显示不了，可去博客，博客地址在最下方）：</a></li>
+    <li><a href="#个人博客地址rzxs-blog1">个人博客地址：<a href="http://blog.renzexuan.com">RZX&rsquo;s blog</a></a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
