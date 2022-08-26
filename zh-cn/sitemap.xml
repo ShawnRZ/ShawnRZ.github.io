@@ -2,55 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ren-zexuan.github.io/zh-cn/categories/</loc>
+    <loc>https://blog.renzexuan.me/p/my-first-post/</loc>
+    <lastmod>2022-08-25T20:36:39+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.renzexuan.me/post/</loc>
+    <lastmod>2022-08-25T20:36:39+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.renzexuan.me/</loc>
+    <lastmod>2022-08-25T20:36:39+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://ren-zexuan.github.io/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ar"
-                href="https://ren-zexuan.github.io/ar/categories/"
+                href="https://blog.renzexuan.me/en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://ren-zexuan.github.io/zh-cn/categories/"
+                href="https://blog.renzexuan.me/"
                 />
   </url><url>
-    <loc>https://ren-zexuan.github.io/zh-cn/tags/</loc>
+    <loc>https://blog.renzexuan.me/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://ren-zexuan.github.io/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ar"
-                href="https://ren-zexuan.github.io/ar/tags/"
+                href="https://blog.renzexuan.me/en/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://ren-zexuan.github.io/zh-cn/tags/"
+                href="https://blog.renzexuan.me/categories/"
                 />
   </url><url>
-    <loc>https://ren-zexuan.github.io/zh-cn/</loc>
+    <loc>https://blog.renzexuan.me/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://ren-zexuan.github.io/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ar"
-                href="https://ren-zexuan.github.io/ar/"
+                href="https://blog.renzexuan.me/en/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://ren-zexuan.github.io/zh-cn/"
+                href="https://blog.renzexuan.me/tags/"
                 />
   </url>
 </urlset>
